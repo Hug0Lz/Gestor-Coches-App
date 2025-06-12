@@ -10,7 +10,7 @@ import SwiftUI
 struct EngadirRexistroMantementoView: View {
     @Environment(\.dismiss) var cerrarView
     @ObservedObject var mantemento:MantementoModel
-    @State var novoRexistro : RexistroMantementoModel = RexistroMantementoModel(fechaMantemento: Date(), anotaciones: "")
+    @State var novoRexistro : RexistroMantementoModel = RexistroMantementoModel(fechaMantemento: Date(), anotaciones: "", kilometraxe: 0)
     
     var body: some View {
      

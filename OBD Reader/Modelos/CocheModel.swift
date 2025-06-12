@@ -14,6 +14,14 @@ class CocheModel: Identifiable, ObservableObject, Codable, Hashable {
     @Published var matricula: String
     @Published var mantementos: [MantementoModel]
 
+    init() {
+        self.id = UUID()
+        self.marca = ""
+        self.modelo = ""
+        self.matricula = ""
+        self.mantementos = []
+    }
+    
     init(id: UUID = UUID(), marca: String, modelo: String, matricula: String, mantementos: [MantementoModel] = []) {
         self.id = id
         self.marca = marca
@@ -53,5 +61,9 @@ class CocheModel: Identifiable, ObservableObject, Codable, Hashable {
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
+    }
+    
+    func engadirMantemento(_ mantemento: MantementoModel) {
+        mantementos.append(mantemento)
     }
 }

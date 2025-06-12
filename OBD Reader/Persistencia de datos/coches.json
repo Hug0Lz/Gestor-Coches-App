@@ -1,0 +1,117 @@
+[
+  {
+    "id": "A1B2C3D4-E5F6-7890-1234-56789ABCDEF0",
+    "marca": "Citroen",
+    "modelo": "Xantia",
+    "matricula": "1234ABC",
+    "mantementos": [
+      {
+        "id": "11111111-2222-3333-4444-555555555555",
+        "fechaRegistro": "2025-06-01T12:00:00Z",
+        "proximaNotificacion": "2025-12-01T12:00:00Z",
+        "titulo": "Cambio de frenos",
+        "descripcion": "Revisión y cambio de pastillas delanteras",
+        "icono": "brakesignal",
+        "fotos": ["freno1.jpg", "freno2.jpg"],
+        "listaMantementos": [
+          {
+            "id": "7C9E6679-7425-40DE-944B-E07FC1F90AE7",
+            "fechaMantemento": "2025-06-01T12:00:00Z",
+            "anotaciones": "Pastillas traseras en buen estado",
+            "kilometraxe": 200000
+          },
+          {
+            "id": "B3C4D5E6-F7A8-492B-81A1-56789ABCDEFA",
+            "fechaMantemento": "2025-05-15T09:30:00Z",
+            "anotaciones": "Se detectó desgaste en delanteras",
+            "kilometraxe": 200000
+          }
+        ]
+      },
+      {
+        "id": "22222222-3333-4444-5555-666666666666",
+        "fechaRegistro": "2025-05-10T08:00:00Z",
+        "proximaNotificacion": "2025-11-10T08:00:00Z",
+        "titulo": "Cambio de aceite",
+        "descripcion": "Aceite semisintético Total Quartz 7000",
+        "icono": "oilcan",
+        "fotos": ["aceite1.jpg"],
+        "listaMantementos": [
+          {
+            "id": "C1234567-89AB-CDEF-0123-456789ABCDEF",
+            "fechaMantemento": "2025-05-10T08:00:00Z",
+            "anotaciones": "Aceite cambiado correctamente",
+            "kilometraxe": 200000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "F1234567-89AB-CDEF-0123-456789ABCDEF",
+    "marca": "BMW",
+    "modelo": "Serie 3 E46",
+    "matricula": "BMW1234",
+    "mantementos": [
+      {
+        "id": "33333333-4444-5555-6666-777777777777",
+        "fechaRegistro": "2025-03-15T10:00:00Z",
+        "proximaNotificacion": "2025-09-15T10:00:00Z",
+        "titulo": "Revisión general",
+        "descripcion": "Revisión anual y cambio filtros",
+        "icono": "wrench",
+        "fotos": ["revision1.jpg", "revision2.jpg"],
+        "listaMantementos": [
+          {
+            "id": "D2345678-9ABC-DEF0-1234-56789ABCDEF0",
+            "fechaMantemento": "2025-03-15T10:00:00Z",
+            "anotaciones": "Montaje sin incidencias",
+            "kilometraxe": 200000
+          }
+        ]
+      },
+      {
+        "id": "44444444-5555-6666-7777-888888888888",
+        "fechaRegistro": "2025-04-20T14:00:00Z",
+        "proximaNotificacion": "2025-10-20T14:00:00Z",
+        "titulo": "Cambio de neumáticos",
+        "descripcion": "Neumáticos delanteros Michelin",
+        "icono": "tire",
+        "fotos": ["neumatico1.jpg"],
+        "listaMantementos": [
+          {
+            "id": "E3456789-ABCD-EF01-2345-6789ABCDEF01",
+            "fechaMantemento": "2025-04-20T14:00:00Z",
+            "anotaciones": "Neumáticos instalados correctamente",
+            "kilometraxe": 200000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "12345678-90AB-CDEF-1234-567890ABCDEF",
+    "marca": "Ford",
+    "modelo": "Focus",
+    "matricula": "FOR123",
+    "mantementos": [
+      {
+        "id": "55555555-6666-7777-8888-999999999999",
+        "fechaRegistro": "2025-02-01T09:00:00Z",
+        "proximaNotificacion": "2025-08-01T09:00:00Z",
+        "titulo": "Cambio de batería",
+        "descripcion": "Batería Bosch 60Ah",
+        "icono": "battery",
+        "fotos": ["bateria1.jpg"],
+        "listaMantementos": [
+          {
+            "id": "F4567890-BCDE-F012-3456-789ABCDEF012",
+            "fechaMantemento": "2025-02-01T09:00:00Z",
+            "anotaciones": "Batería reemplazada y testeada",
+            "kilometraxe": 200000
+          }
+        ]
+      }
+    ]
+  }
+]

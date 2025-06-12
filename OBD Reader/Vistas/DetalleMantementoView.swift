@@ -9,14 +9,19 @@
 import SwiftUI
 
 struct DetalleMantementoView: View {
-    @ObservedObject var mantemento: MantementoModel
-    @ObservedObject var coche: CocheModel
+    @Binding var mantemento: MantementoModel
+//    @ObservedObject var coche: CocheModel
 
     var body: some View {
         Form {
             Section(header: Text("Información").font(.headline)) {
-                Label(mantemento.titulo, systemImage: mantemento.icono)
-                    .font(.title)
+                HStack{
+                    Image(systemName: mantemento.icono)
+                        .foregroundColor(.blue)
+                    Text(mantemento.titulo)
+                        .font(.title)
+                }
+
                 Text(mantemento.descripcion)
                     .font(.title3)
                     .fontWeight(.semibold)
@@ -87,14 +92,6 @@ struct DetalleMantementoView: View {
                     
                 }
             }
-            
-//          FOTOS
-//            Section(header: Text("Fotos")) {
-//                ForEach(mantemento.fotos, id: \.self) { foto in
-//                    Text(foto)
-//                }
-//                // Aquí podrías agregar botón para añadir fotos, etc.
-//            }
         }
         .navigationTitle("Detalle do Mantemento")
         .navigationBarTitleDisplayMode(.inline)
@@ -103,9 +100,7 @@ struct DetalleMantementoView: View {
 
 
 #Preview {
-    @ObservedObject var m:MantementoModel = MantementoModel(fechaRegistro: Date(), proximaNotificacion: Date(), titulo: "Cambio discos freo", descripcion: "Cambio dos discos dianteiros e as súas pastillas", icono: "brakesignal", listaMantementos: [RexistroMantementoModel(fechaMantemento: Date(), anotaciones: "Botóuselle grasa de litio para que sexa máis sinxelo quitar o disco a próxima vez")])
+    @Previewable @State var m:MantementoModel = MantementoModel(fechaRegistro: Date(), proximaNotificacion: Date(), titulo: "Cambio discos freo", descripcion: "Cambio dos discos dianteiros e as súas pastillas", icono: "brakesignal", listaMantementos: [RexistroMantementoModel(fechaMantemento: Date(), anotaciones: "Botóuselle grasa de litio para que sexa máis sinxelo quitar o disco a próxima vez", kilometraxe: 204203)])
     @ObservedObject var coche:CocheModel = CocheModel(marca: "Citroen", modelo: "Xantia", matricula: "1234BBB")
-    DetalleMantementoView(mantemento: m, coche:coche)
+    DetalleMantementoView(mantemento: $m)
 }
-
-//

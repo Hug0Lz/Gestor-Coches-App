@@ -18,8 +18,23 @@ struct DetalleRexistroMantementoView: View {
                             .foregroundColor(.blue)
                         DatePicker("Fecha mantemento", selection: $detalle.fechaMantemento, displayedComponents: .date)
                     }
+                    
+                    HStack {
+                        Image(systemName: "road.lanes")
+                            .foregroundColor(.blue)
+                        Text("Kilometraxe")
+                        Spacer()
+                        TextField("Kilometraxe", value: $detalle.kilometraxe, format: .number)
+                            .keyboardType(.decimalPad)
+                    }
+                    
                     Section(header: Text("Anotacións").font(.headline)) {
-                        Text(detalle.anotaciones)
+                    
+                        
+                        TextEditor(text: $detalle.anotaciones)
+                            .frame(minHeight: 100)
+                            .padding(4)
+                          
                     }
                 .navigationTitle("Detalle do Mantemento")
                 .navigationBarTitleDisplayMode(.inline)
@@ -29,6 +44,6 @@ struct DetalleRexistroMantementoView: View {
 }
 
 #Preview {
-    @ObservedObject var det =  RexistroMantementoModel( fechaMantemento: Date(), anotaciones: "O tornillo estaba algo oxidado. Boteille grasa de litio para a próxima!")
+    @ObservedObject var det =  RexistroMantementoModel( fechaMantemento: Date(), anotaciones: "O tornillo estaba algo oxidado. Boteille grasa de litio para a próxima!", kilometraxe: 200)
     DetalleRexistroMantementoView(detalle: det)
 }

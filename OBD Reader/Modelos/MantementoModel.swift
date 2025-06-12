@@ -1,5 +1,7 @@
 import Foundation
-/// Clase MantementoModel, que garda información sobre un tipo de mantemento realizado a un vehículo. 
+import Combine
+
+/// Clase MantementoModel, que garda información sobre un tipo de mantemento realizado a un vehículo.
 class MantementoModel: ObservableObject, Identifiable, Codable {
     var id: UUID
     @Published var fechaRegistro: Date
@@ -7,9 +9,26 @@ class MantementoModel: ObservableObject, Identifiable, Codable {
     @Published var titulo: String
     @Published var descripcion: String
     @Published var icono: String
-//    @Published var fotos: [String]
-    @Published var listaMantementos: [RexistroMantementoModel]
+    @Published var listaMantementos: [RexistroMantementoModel] {
+        didSet {
+            updateProximaNotificacion()
+        }
+    }
 
+    // Para gardar o subscription ao Published de listaMantementos
+    private var cancellables = Set<AnyCancellable>()
+
+    init() {
+        self.id = UUID()
+        self.fechaRegistro = Date()
+        self.proximaNotificacion = Date()
+        self.titulo = ""
+        self.descripcion = ""
+        self.icono = "wrench"
+        self.listaMantementos = []
+        setupBindings()
+    }
+    
     init(
         id: UUID = UUID(),
         fechaRegistro: Date,
@@ -17,7 +36,6 @@ class MantementoModel: ObservableObject, Identifiable, Codable {
         titulo: String,
         descripcion: String,
         icono: String,
-//        fotos: [String] = [],
         listaMantementos: [RexistroMantementoModel] = []
     ) {
         self.id = id
@@ -26,13 +44,44 @@ class MantementoModel: ObservableObject, Identifiable, Codable {
         self.titulo = titulo
         self.descripcion = descripcion
         self.icono = icono
-//        self.fotos = fotos
         self.listaMantementos = listaMantementos
+        setupBindings()
+        updateProximaNotificacion()
     }
 
-    /// Implementación de funcións para que sexa codeable (codificar / decodificar JSON)
+    /// Configura os bindings para que calquera cambio (append, remove…) en listaMantementos dispare o cálculo.
+    private func setupBindings() {
+        $listaMantementos
+            .sink { [weak self] _ in
+                self?.updateProximaNotificacion()
+            }
+            .store(in: &cancellables)
+    }
+
+    /// Calcula a fecha futura máis próxima de entre todolos rexistros
+    private func updateProximaNotificacion() {
+        let ahora = Date()
+        let futuras = listaMantementos
+            .map(\.fechaMantemento)
+            .filter { $0 > ahora }
+        if let proxima = futuras.min() {
+            proximaNotificacion = proxima
+        } else {
+            // Se non hai ningunha data futura, podes deixala en Date() ou nil (se o fas optional)
+            proximaNotificacion = ahora
+        }
+    }
+
+    /// Engade un rexistro e reinicia o cálculo de próxima notificación
+    func engadirRexistro(_ rexistro: RexistroMantementoModel) {
+        listaMantementos.append(rexistro)
+        // O didSet e o publisher de listaMantementos xa chamarán a updateProximaNotificacion()
+    }
+
+    // MARK: - Codable
+
     enum CodingKeys: String, CodingKey {
-        case id, fechaRegistro, proximaNotificacion, titulo, descripcion, icono, fotos, listaMantementos
+        case id, fechaRegistro, proximaNotificacion, titulo, descripcion, icono, listaMantementos
     }
 
     required init(from decoder: Decoder) throws {
@@ -43,8 +92,9 @@ class MantementoModel: ObservableObject, Identifiable, Codable {
         titulo = try container.decode(String.self, forKey: .titulo)
         descripcion = try container.decode(String.self, forKey: .descripcion)
         icono = try container.decode(String.self, forKey: .icono)
-//        fotos = try container.decode([String].self, forKey: .fotos)
         listaMantementos = try container.decode([RexistroMantementoModel].self, forKey: .listaMantementos)
+        setupBindings()
+        updateProximaNotificacion()
     }
 
     func encode(to encoder: Encoder) throws {
@@ -55,11 +105,6 @@ class MantementoModel: ObservableObject, Identifiable, Codable {
         try container.encode(titulo, forKey: .titulo)
         try container.encode(descripcion, forKey: .descripcion)
         try container.encode(icono, forKey: .icono)
-//        try container.encode(fotos, forKey: .fotos)
         try container.encode(listaMantementos, forKey: .listaMantementos)
-    }
-    
-    func engadirRexistro(_ rexistro: RexistroMantementoModel) {
-        listaMantementos.append(rexistro)
     }
 }
