@@ -10,6 +10,9 @@ import SwiftUI
 struct CochesView: View {
     @EnvironmentObject var cochesViewModel: AlmacenCoches
 
+    @State private var cocheAEditar: CocheModel?
+    @State private var mostrarEditor: Bool = false
+
     var body: some View {
         NavigationView {
             List {
@@ -30,8 +33,9 @@ struct CochesView: View {
                 // Sección coa lista de coches
                 Section {
                     ForEach(cochesViewModel.coches) { coche in
-                        NavigationLink {
-                            EditarCocheView(coche: coche)
+                        Button {
+                            cocheAEditar = coche
+                            mostrarEditor = true
                         } label: {
                             VStack(alignment: .leading) {
                                 Text(coche.marca)
@@ -48,11 +52,19 @@ struct CochesView: View {
             }
             .listStyle(InsetGroupedListStyle())
             .navigationTitle("Lista de Coches")
-//            .toolbar {
-//                ToolbarItem(placement: .navigationBarTrailing) {
-//                    EditButton()
-//                }
-//            }
+            .navigationDestination(isPresented: $mostrarEditor) {
+                if let coche = cocheAEditar,
+                   let index = cochesViewModel.coches.firstIndex(where: { $0.id == coche.id }) {
+                    EditarCocheView(coche: $cochesViewModel.coches[index])
+                        .onDisappear {
+                            // Forzar refresco visual
+                            let copia = cochesViewModel.coches
+                            cochesViewModel.coches = copia
+                        }
+                } else {
+                    Text("Coche non atopado")
+                }
+            }
         }
     }
 

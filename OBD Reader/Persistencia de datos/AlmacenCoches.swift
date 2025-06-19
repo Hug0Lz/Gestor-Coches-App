@@ -11,7 +11,7 @@ import SwiftUI
 final class AlmacenCoches: ObservableObject {
     @Published var coches: [CocheModel] = [] {
         didSet {
-            saveCoches()    // cada vez que coches cambie, grabamos
+            saveCoches()    // Guarda en el Json los cambios realizados
         }
     }
 

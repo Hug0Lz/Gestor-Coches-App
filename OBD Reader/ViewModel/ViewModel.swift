@@ -6,17 +6,24 @@ import Combine
 class ViewModel: ObservableObject {
     @Published var connectionState: ConnectionState = .disconnected
     @Published var measurements: [OBDCommand: MeasurementResult] = [:]
+    
     @Published var coolantTemp: Double? = nil
     @Published var intakeAirTemp: Double? = nil
+    @Published var oilTemp: Double? = nil
     @Published var batteryVoltage: Double? = nil
     @Published var engineRPM: Double? = nil
     @Published var throttlePosition: Double? = nil
+    @Published var mapSensor: Double? = nil
+    @Published var speed: Double? = nil
+    @Published var motorStress: Double? = nil
+    @Published var revs: Double? = nil
 
-
+    
 
 
     var cancellables = Set<AnyCancellable>()
     let obdService = OBDService(connectionType: .bluetooth)
+    private var demoTimer: Timer?
 
     init() {
         // Vincula el estado de conexión
@@ -24,6 +31,29 @@ class ViewModel: ObservableObject {
             .assign(to: &$connectionState)
     }
 
+    
+
+
+      func iniciarModoDemo() {
+          demoTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
+              DispatchQueue.main.async {
+                  self.coolantTemp = Double.random(in: 60...110)
+                  self.intakeAirTemp = Double.random(in: 20...60)
+                  self.oilTemp = Double.random(in: 60...100)
+                  self.mapSensor = Double.random(in: 10...400)
+                  self.speed = Double.random(in: 1...199)
+                  self.motorStress = Double.random(in: 0...100)
+                  self.revs = Double.random(in: 0...10000)
+              }
+          }
+      }
+
+      func pararModoDemo() {
+          demoTimer?.invalidate()
+          demoTimer = nil
+      }
+    
+    
     func startConnection() async {
         do {
             print("Intentando conectar con el OBD-II...")

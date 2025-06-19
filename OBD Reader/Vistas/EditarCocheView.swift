@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EditarCocheView: View {
-    @ObservedObject var coche: CocheModel
+    @Binding var coche: CocheModel
     var body: some View {
      
         List{
@@ -44,9 +44,9 @@ struct EditarCocheView: View {
         
     }
 }
-
-#Preview {
-    @ObservedObject var coche = CocheModel(marca: "Citroen", modelo: "Xantia", matricula: "1234BBB")
-
-    EditarCocheView(coche: coche)
-}
+//
+//#Preview {
+//    @Binding var coche = CocheModel(marca: "Citroen", modelo: "Xantia", matricula: "1234BBB")
+//
+//    EditarCocheView(coche: $coche)
+//}

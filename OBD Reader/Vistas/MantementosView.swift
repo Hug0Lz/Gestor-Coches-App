@@ -114,6 +114,9 @@ struct MantementosView: View {
             .onAppear {
                 if cocheSeleccionadoId == nil {
                     cocheSeleccionadoId = almacenCoches.coches.first?.id
+                }else{
+                    let copia = almacenCoches.coches
+                          almacenCoches.coches = copia
                 }
             }
         }
